@@ -120,6 +120,270 @@
 
 <main id="main">
 
+/* ─────────────────────────────────────
+   ① HERO
+───────────────────────────────────── */
+.hero {
+  position: relative;
+  min-height: 100svh;
+  padding: 12rem 0 4rem;
+  overflow: hidden;
+  background: var(--paper);
+  isolation: isolate;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60% 40% at 78% 22%, rgba(74, 107, 78, .08), transparent 70%),
+    radial-gradient(50% 30% at 12% 88%, rgba(181, 98, 60, .05), transparent 70%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.hero__mega {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 0 var(--wrap-pad);
+  margin-top: clamp(1.5rem, 4vw, 4rem);
+  z-index: 0;
+  pointer-events: none;
+  color: var(--ink);
+}
+
+.hero__mega-line {
+  font-family: var(--f-serif);
+  font-weight: 300;
+  /* 行間を少し広げる */
+  line-height: .92;
+  letter-spacing: -0.045em;
+  white-space: nowrap;
+  transform: translateX(calc(var(--mega-base-x, 0px) + var(--mega-scroll-x, 0px)));
+}
+
+.hero__mega-line--1 {
+  /* 少しだけ大きく */
+  font-size: clamp(6.8rem, 13.5vw, 19.5rem);
+  color: var(--ink);
+  --mega-base-x: 0px;
+}
+
+.hero__mega-line--2 {
+  font-size: clamp(2.8rem, 5.8vw, 7.5rem);
+  font-style: italic;
+  font-weight: 300;
+  /* セージグリーンをやや明るく */
+  color: #5C7E60;
+  margin-top: -0.04em;
+  --mega-base-x: 5vw;
+}
+
+.hero__mega-line--3 {
+  font-size: clamp(6.8rem, 13.5vw, 19.5rem);
+  /* 緑がかった墨色でQualityと対比 */
+  color: #2A3028;
+  margin-top: -0.01em;
+  --mega-base-x: 10vw;
+}
+
+/* Meta info bar — 削除のためdisplay:none */
+.hero__meta {
+  display: none;
+}
+
+/* Hero visual */
+.hero__visual {
+  position: absolute;
+  top: 18vw;
+  right: var(--wrap-pad);
+  width: clamp(24rem, 32vw, 42rem);
+  aspect-ratio: 4 / 5;
+  z-index: 2;
+  overflow: hidden;
+  box-shadow: var(--sh-3);
+}
+.hero__visual-inner { position: relative; width: 100%; height: 100%; }
+.hero__visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: contrast(1.02) saturate(.92);
+  transform: scale(1.02);
+  transition: transform 8s var(--ease-soft), filter 8s var(--ease-soft);
+}
+.hero:hover .hero__visual img { transform: scale(1.06); filter: contrast(1.05) saturate(.96); }
+.hero__visual-caption {
+  position: absolute;
+  left: 1.4rem;
+  bottom: 1.4rem;
+  font-family: var(--f-mono);
+  font-size: 1rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  color: #F5F1E8;
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .5rem 1rem;
+  background: rgba(0,0,0,.35);
+  backdrop-filter: blur(6px);
+}
+.hero__visual-caption .dot {
+  width: .5rem;
+  height: .5rem;
+  border-radius: 50%;
+  background: #F5C97A;
+}
+
+/* Hero copy */
+.hero__copy {
+  position: relative;
+  z-index: 3;
+  padding: 0 var(--wrap-pad);
+  max-width: var(--wrap-max);
+  margin: 0 auto;
+  margin-top: clamp(2.4rem, 4vw, 4rem);
+}
+.hero__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-family: var(--f-mono);
+  font-size: 1.15rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: var(--ink-70);
+  margin-bottom: 2rem;
+}
+.hero__eyebrow-line {
+  width: 4rem;
+  height: 1px;
+  background: currentColor;
+}
+.hero__h1 {
+  font-family: var(--f-mincho);
+  font-weight: 700;
+  font-size: clamp(3.4rem, 6.4vw, 6.8rem);
+  line-height: 1.22;
+  letter-spacing: -0.008em;
+  color: var(--ink);
+  margin-bottom: 2.4rem;
+  max-width: 20ch;
+}
+.hero__h1 span { display: block; }
+.hero__h1 em {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--sage-d);
+  letter-spacing: -0.015em;
+  font-size: 0.94em;
+  margin: 0 .04em;
+}
+.hero__h1-l2 { padding-left: 1.6em; }
+.hero__h1-l3 { padding-left: 3.2em; }
+.hero__sub {
+  font-family: var(--f-sans);
+  font-size: clamp(1.4rem, 1.6vw, 1.65rem);
+  font-weight: 300;
+  line-height: 2;
+  color: var(--ink-70);
+  max-width: 52ch;
+  margin-bottom: 3.2rem;
+  text-wrap: pretty;
+}
+.hero__actions {
+  display: flex;
+  gap: 1.2rem;
+  flex-wrap: wrap;
+}
+
+/* Scroll indicator */
+.hero__scroll {
+  position: absolute;
+  left: var(--wrap-pad);
+  bottom: 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 3;
+}
+.hero__scroll-label {
+  font-family: var(--f-mono);
+  font-size: 1rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+}
+.hero__scroll-line {
+  width: 6rem;
+  height: 1px;
+  background: linear-gradient(to right, var(--ink-30) 0%, var(--ink-30) 40%, transparent 40%, transparent 100%);
+  background-size: 200% 100%;
+  animation: scrollLine 2s var(--ease-soft) infinite;
+}
+@keyframes scrollLine {
+  0%   { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+/* Services mini index */
+.hero__services {
+  position: absolute;
+  right: var(--wrap-pad);
+  bottom: 3rem;
+  z-index: 3;
+  max-width: 32rem;
+}
+.hero__services-label {
+  font-family: var(--f-mono);
+  font-size: 1rem;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  color: var(--ink-50);
+  margin-bottom: 1.4rem;
+}
+.hero__services-list {
+  display: grid;
+  gap: .8rem;
+  border-top: 1px solid var(--ink-12);
+}
+.hero__services-list a {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 1rem;
+  align-items: baseline;
+  padding: .9rem 0;
+  border-bottom: 1px solid var(--ink-12);
+  transition: padding-left .4s var(--ease-weight), color .3s var(--ease-soft);
+}
+.hero__services-list em {
+  font-family: var(--f-mono);
+  font-size: 1rem;
+  color: var(--ink-50);
+  letter-spacing: .1em;
+}
+.hero__services-list span {
+  font-family: var(--f-mincho);
+  font-size: 1.35rem;
+  color: var(--ink);
+  font-weight: 500;
+}
+.hero__services-list small {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-50);
+  grid-column: 2;
+}
+.hero__services-list a:hover { padding-left: .8rem; }
+.hero__services-list a:hover span { color: var(--sage-d); }
+.hero__services-list a:hover em { color: var(--sage); }
+
 <!--====================================================
     ② MISSION STRIP
 ====================================================-->
